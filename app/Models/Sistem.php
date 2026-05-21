@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Sistem extends Model
+{
+    use HasFactory;
+
+    protected $table = 'sistem';
+    protected $primaryKey = 'id_sistem';
+
+    protected $fillable = [
+        'nama_sistem',
+        'status_sistem'
+    ];
+}

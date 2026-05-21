@@ -1,0 +1,105 @@
+=== Laporan Testing API E-Pengadaan ===
+
+1. Register User...
+Status: 201
+Response: {
+  "data": {
+    "nama_user": "Panitia Lelang",
+    "email_user": "panitia@test.com",
+    "status_user": "ACTIVE",
+    "id_sistem": 1,
+    "id_role": 1,
+    "updated_at": "2026-05-21T09:18:58.000000Z",
+    "created_at": "2026-05-21T09:18:58.000000Z",
+    "id_user": 1
+  },
+  "access_token": "1|GauGqzhnMHNHCffXZKhK6V5ydkrSkxCOjhzb2LO911bf1b48",
+  "token_type": "Bearer"
+}
+
+2. Register Penyedia...
+Status: 201
+Response: {
+  "data": {
+    "nama_perusahaan": "PT Makmur Jaya",
+    "email_penyedia": "makmur@test.com",
+    "nib": "1234567890",
+    "id_sistem": 1,
+    "updated_at": "2026-05-21T09:18:58.000000Z",
+    "created_at": "2026-05-21T09:18:58.000000Z",
+    "id_penyedia": 1
+  },
+  "access_token": "2|mQnyFFZ8k35p4aZ4wZ59ZwmbljXYrZ7D7cL2yF2t4b3dbdd0",
+  "token_type": "Bearer"
+}
+
+3. Create Pengadaan (menggunakan token user)...
+Status: 201
+Response: {
+  "nama_pengadaan": "Pengadaan Laptop 2026",
+  "pagu_anggaran": "50000000",
+  "id_user": 1,
+  "id_penyedia": 1,
+  "status_pengadaan": "DRAFT",
+  "updated_at": "2026-05-21T09:18:58.000000Z",
+  "created_at": "2026-05-21T09:18:58.000000Z",
+  "id_pengadaan": 1,
+  "progress": [
+    {
+      "id_progress": 1,
+      "persentase_progress": "10%",
+      "keterangan_progress": "Paket baru dibuat",
+      "id_pengadaan": 1,
+      "created_at": "2026-05-21T09:18:58.000000Z",
+      "updated_at": "2026-05-21T09:18:58.000000Z"
+    }
+  ]
+}
+
+4. Get All Pengadaan...
+Status: 200
+Response: [
+  {
+    "id_pengadaan": 1,
+    "nama_pengadaan": "Pengadaan Laptop 2026",
+    "pagu_anggaran": "50000000",
+    "nilai_penawaran": null,
+    "nilai_kontrak": null,
+    "status_pengadaan": "DRAFT",
+    "id_user": 1,
+    "id_penyedia": 1,
+    "created_at": "2026-05-21T09:18:58.000000Z",
+    "updated_at": "2026-05-21T09:18:58.000000Z",
+    "user": {
+      "id_user": 1,
+      "nama_user": "Panitia Lelang",
+      "email_user": "panitia@test.com",
+      "status_user": "ACTIVE",
+      "id_sistem": 1,
+      "id_role": 1,
+      "created_at": "2026-05-21T09:18:58.000000Z",
+      "updated_at": "2026-05-21T09:18:58.000000Z"
+    },
+    "penyedia": {
+      "id_penyedia": 1,
+      "nama_perusahaan": "PT Makmur Jaya",
+      "email_penyedia": "makmur@test.com",
+      "nib": "1234567890",
+      "id_sistem": 1,
+      "created_at": "2026-05-21T09:18:58.000000Z",
+      "updated_at": "2026-05-21T09:18:58.000000Z"
+    },
+    "progress": [
+      {
+        "id_progress": 1,
+        "persentase_progress": "10%",
+        "keterangan_progress": "Paket baru dibuat",
+        "id_pengadaan": 1,
+        "created_at": "2026-05-21T09:18:58.000000Z",
+        "updated_at": "2026-05-21T09:18:58.000000Z"
+      }
+    ],
+    "laporan": []
+  }
+]
+
