@@ -2,113 +2,319 @@
 
 # Backend Laravel — e-Pengadaan Langsung
 
----
+## 1. Project Title
 
-# 1. Informasi Project
+**Backend Laravel — e-Pengadaan Langsung**
 
-## Nama Project
-
-Backend e-Pengadaan Langsung
-
-## Framework
-
-- Laravel 13
-
-## Bahasa Pemrograman
-
-- PHP 8.4
-
-## Database
-
-- MySQL
-
-## Arsitektur
-
-- REST API
-- MVC (Model View Controller)
-
-## Tujuan Sistem
-
-Sistem backend ini digunakan untuk mendukung proses pengadaan langsung secara digital, meliputi:
-
-- Manajemen user
-- Login authentication
-- Pengelolaan pengadaan
-- Pengelolaan vendor/penyedia
-- Pengiriman penawaran
-- Tracking progress pengadaan
-- Pembuatan laporan
+Dokumen ini merupakan Software Coding Documentation (SCD) untuk project backend **e-Pengadaan Langsung** yang dikembangkan menggunakan framework Laravel. Dokumen ini disusun untuk menjelaskan gambaran umum sistem, teknologi yang digunakan, struktur project, proses instalasi, konfigurasi environment, dokumentasi database, dokumentasi API, proses testing, serta rekomendasi deployment.
 
 ---
 
-# 2. Struktur Project
+## 2. Overview
+
+Backend e-Pengadaan Langsung adalah aplikasi backend berbasis REST API yang digunakan untuk mendukung proses pengadaan langsung secara digital. Sistem ini berfungsi sebagai pusat pengelolaan data dan logika bisnis yang akan digunakan oleh aplikasi frontend atau client lain melalui endpoint API.
+
+Secara umum, backend ini mendukung beberapa kebutuhan utama, yaitu manajemen user, autentikasi login, pengelolaan data pengadaan, pengelolaan vendor atau penyedia, pencatatan progress pengadaan, serta pembuatan laporan terkait proses pengadaan. Sistem dibangun menggunakan arsitektur MVC (Model View Controller) yang umum digunakan pada Laravel, sehingga pemisahan antara model data, controller, routing, dan konfigurasi aplikasi dapat dilakukan secara lebih terstruktur.
+
+Aplikasi ini dirancang agar dapat dijalankan pada environment lokal maupun container berbasis Docker. Dengan adanya konfigurasi Docker, proses setup dan deployment menjadi lebih konsisten karena aplikasi dapat dijalankan dalam container dengan dependency yang sudah didefinisikan.
+
+---
+
+## 3. Project Information
+
+| Item               | Description                                       |
+| ------------------ | ------------------------------------------------- |
+| Nama Project       | Backend e-Pengadaan Langsung                      |
+| Jenis Aplikasi     | Backend REST API                                  |
+| Framework          | Laravel                                           |
+| Bahasa Pemrograman | PHP                                               |
+| Database           | MySQL                                             |
+| Arsitektur         | REST API dan MVC                                  |
+| Repository         | GitHub Repository be-e-pengadaan-langsung-laravel |
+
+---
+
+## 4. Technology Stack
+
+| Technology                 | Function                                                                                        |
+| -------------------------- | ----------------------------------------------------------------------------------------------- |
+| PHP                        | Bahasa pemrograman utama untuk backend                                                          |
+| Laravel                    | Framework utama untuk membangun REST API                                                        |
+| MySQL                      | Database management system untuk menyimpan data aplikasi                                        |
+| Composer                   | Dependency manager untuk package PHP                                                            |
+| Docker                     | Containerization untuk menjalankan aplikasi secara konsisten                                    |
+| Docker Compose             | Mengatur service container aplikasi                                                             |
+| XAMPP / MySQL Local Server | Alternatif environment lokal untuk database                                                     |
+| Laravel Artisan            | Command line tool Laravel untuk menjalankan migration, seeder, server, dan konfigurasi aplikasi |
+| Postman / Browser          | Tools untuk melakukan pengujian API secara manual                                               |
+
+---
+
+## 5. Project Structure
+
+Struktur folder project mengikuti standar Laravel. Berikut gambaran struktur utama project:
 
 ```text
-backend-laravel/
-│
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/
-│   │   └── Middleware/
-│   ├── Models/
-│   └── Providers/
-│
-├── bootstrap/
-├── config/
-├── database/
-│   ├── migrations/
-│   └── seeders/
-│
-├── public/
-├── resources/
-├── routes/
-│   └── api.php
-│
-├── storage/
-├── tests/
-├── artisan
-├── composer.json
-├── Dockerfile
-├── docker-compose.yml
-└── .env
+📦be-e-pengadaan-langsung-laravel
+ ┣ 📂.git
+ ┃ ┣ 📂gk
+ ┃ ┃ ┗ 📜config
+ ┃ ┣ 📂hooks
+ ┃ ┃ ┣ 📜applypatch-msg.sample
+ ┃ ┃ ┣ 📜commit-msg.sample
+ ┃ ┃ ┣ 📜fsmonitor-watchman.sample
+ ┃ ┃ ┣ 📜post-update.sample
+ ┃ ┃ ┣ 📜pre-applypatch.sample
+ ┃ ┃ ┣ 📜pre-commit.sample
+ ┃ ┃ ┣ 📜pre-merge-commit.sample
+ ┃ ┃ ┣ 📜pre-push.sample
+ ┃ ┃ ┣ 📜pre-rebase.sample
+ ┃ ┃ ┣ 📜pre-receive.sample
+ ┃ ┃ ┣ 📜prepare-commit-msg.sample
+ ┃ ┃ ┣ 📜push-to-checkout.sample
+ ┃ ┃ ┣ 📜sendemail-validate.sample
+ ┃ ┃ ┗ 📜update.sample
+ ┃ ┣ 📂info
+ ┃ ┃ ┗ 📜exclude
+ ┃ ┣ 📂logs
+ ┃ ┃ ┣ 📂refs
+ ┃ ┃ ┃ ┣ 📂heads
+ ┃ ┃ ┃ ┃ ┗ 📜main
+ ┃ ┃ ┃ ┗ 📂remotes
+ ┃ ┃ ┃ ┃ ┗ 📂origin
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜HEAD
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜main
+ ┃ ┃ ┗ 📜HEAD
+ ┃ ┣ 📂objects
+ ┃ ┃ ┣ 📂33
+ ┃ ┃ ┃ ┗ 📜c3d8b38fa50e7f3f020923b53750f052130c46
+ ┃ ┃ ┣ 📂71
+ ┃ ┃ ┃ ┗ 📜b9ea6e375c40542d7b52dd64f0b0c5116e6302
+ ┃ ┃ ┣ 📂72
+ ┃ ┃ ┃ ┗ 📜6d47eed5cd18196d2be6b31aa8f799118be6a9
+ ┃ ┃ ┣ 📂89
+ ┃ ┃ ┃ ┗ 📜0bf07c3a66d0e11d785c0c961dc97a75afa24b
+ ┃ ┃ ┣ 📂ad
+ ┃ ┃ ┃ ┗ 📜89814437056d13ce2fca4d3c7dc4abbf7b20ce
+ ┃ ┃ ┣ 📂cc
+ ┃ ┃ ┃ ┗ 📜c34eabed9b52ac131b90c0485d39850d32a700
+ ┃ ┃ ┣ 📂db
+ ┃ ┃ ┃ ┗ 📜501736af8925b42d139c50bceca84bda3e450e
+ ┃ ┃ ┣ 📂f2
+ ┃ ┃ ┃ ┗ 📜fc3f8ec68ef9151b1509035c39c257eb2ca7a2
+ ┃ ┃ ┣ 📂f8
+ ┃ ┃ ┃ ┗ 📜e124cfd93fa9074f64124f54f5cd408a4079e3
+ ┃ ┃ ┣ 📂info
+ ┃ ┃ ┗ 📂pack
+ ┃ ┃ ┃ ┣ 📜pack-117746c32ca4758533eaf928c415bf36903f7003.idx
+ ┃ ┃ ┃ ┣ 📜pack-117746c32ca4758533eaf928c415bf36903f7003.pack
+ ┃ ┃ ┃ ┗ 📜pack-117746c32ca4758533eaf928c415bf36903f7003.rev
+ ┃ ┣ 📂refs
+ ┃ ┃ ┣ 📂heads
+ ┃ ┃ ┃ ┗ 📜main
+ ┃ ┃ ┣ 📂remotes
+ ┃ ┃ ┃ ┗ 📂origin
+ ┃ ┃ ┃ ┃ ┣ 📜HEAD
+ ┃ ┃ ┃ ┃ ┗ 📜main
+ ┃ ┃ ┗ 📂tags
+ ┃ ┣ 📜COMMIT_EDITMSG
+ ┃ ┣ 📜config
+ ┃ ┣ 📜description
+ ┃ ┣ 📜FETCH_HEAD
+ ┃ ┣ 📜HEAD
+ ┃ ┣ 📜index
+ ┃ ┗ 📜packed-refs
+ ┣ 📂app
+ ┃ ┣ 📂Http
+ ┃ ┃ ┗ 📂Controllers
+ ┃ ┃ ┃ ┣ 📜AuthController.php
+ ┃ ┃ ┃ ┣ 📜Controller.php
+ ┃ ┃ ┃ ┣ 📜LaporanController.php
+ ┃ ┃ ┃ ┣ 📜PengadaanController.php
+ ┃ ┃ ┃ ┗ 📜ProgressController.php
+ ┃ ┣ 📂Models
+ ┃ ┃ ┣ 📜Laporan.php
+ ┃ ┃ ┣ 📜Pengadaan.php
+ ┃ ┃ ┣ 📜Penyedia.php
+ ┃ ┃ ┣ 📜Progress.php
+ ┃ ┃ ┣ 📜Role.php
+ ┃ ┃ ┣ 📜Sistem.php
+ ┃ ┃ ┗ 📜User.php
+ ┃ ┗ 📂Providers
+ ┃ ┃ ┗ 📜AppServiceProvider.php
+ ┣ 📂bootstrap
+ ┃ ┣ 📂cache
+ ┃ ┃ ┗ 📜.gitignore
+ ┃ ┣ 📜app.php
+ ┃ ┗ 📜providers.php
+ ┣ 📂config
+ ┃ ┣ 📜app.php
+ ┃ ┣ 📜auth.php
+ ┃ ┣ 📜cache.php
+ ┃ ┣ 📜database.php
+ ┃ ┣ 📜filesystems.php
+ ┃ ┣ 📜logging.php
+ ┃ ┣ 📜mail.php
+ ┃ ┣ 📜queue.php
+ ┃ ┣ 📜sanctum.php
+ ┃ ┣ 📜services.php
+ ┃ ┗ 📜session.php
+ ┣ 📂database
+ ┃ ┣ 📂factories
+ ┃ ┃ ┗ 📜UserFactory.php
+ ┃ ┣ 📂migrations
+ ┃ ┃ ┣ 📜0000_00_00_000000_create_sistems_table.php
+ ┃ ┃ ┣ 📜0000_00_00_000001_create_roles_table.php
+ ┃ ┃ ┣ 📜0001_01_01_000000_create_users_table.php
+ ┃ ┃ ┣ 📜0001_01_01_000001_create_cache_table.php
+ ┃ ┃ ┣ 📜0001_01_01_000001_create_penyedias_table.php
+ ┃ ┃ ┣ 📜0001_01_01_000002_create_jobs_table.php
+ ┃ ┃ ┣ 📜2026_05_21_085613_create_personal_access_tokens_table.php
+ ┃ ┃ ┣ 📜2026_05_21_085804_create_pengadaans_table.php
+ ┃ ┃ ┣ 📜2026_05_21_085804_create_progress_table.php
+ ┃ ┃ ┗ 📜2026_05_21_090124_create_laporans_table.php
+ ┃ ┣ 📂seeders
+ ┃ ┃ ┣ 📜DatabaseSeeder.php
+ ┃ ┃ ┗ 📜TestUserSeeder.php
+ ┃ ┗ 📜.gitignore
+ ┣ 📂public
+ ┃ ┣ 📜.htaccess
+ ┃ ┣ 📜favicon.ico
+ ┃ ┣ 📜index.php
+ ┃ ┗ 📜robots.txt
+ ┣ 📂resources
+ ┃ ┣ 📂css
+ ┃ ┃ ┗ 📜app.css
+ ┃ ┣ 📂js
+ ┃ ┃ ┗ 📜app.js
+ ┃ ┗ 📂views
+ ┃ ┃ ┗ 📜welcome.blade.php
+ ┣ 📂routes
+ ┃ ┣ 📜api.php
+ ┃ ┣ 📜console.php
+ ┃ ┗ 📜web.php
+ ┣ 📂storage
+ ┃ ┣ 📂app
+ ┃ ┃ ┣ 📂private
+ ┃ ┃ ┃ ┗ 📜.gitignore
+ ┃ ┃ ┣ 📂public
+ ┃ ┃ ┃ ┗ 📜.gitignore
+ ┃ ┃ ┗ 📜.gitignore
+ ┃ ┣ 📂framework
+ ┃ ┃ ┣ 📂cache
+ ┃ ┃ ┃ ┣ 📂data
+ ┃ ┃ ┃ ┃ ┗ 📜.gitignore
+ ┃ ┃ ┃ ┗ 📜.gitignore
+ ┃ ┃ ┣ 📂sessions
+ ┃ ┃ ┃ ┗ 📜.gitignore
+ ┃ ┃ ┣ 📂testing
+ ┃ ┃ ┃ ┗ 📜.gitignore
+ ┃ ┃ ┣ 📂views
+ ┃ ┃ ┃ ┗ 📜.gitignore
+ ┃ ┃ ┗ 📜.gitignore
+ ┃ ┗ 📂logs
+ ┃ ┃ ┗ 📜.gitignore
+ ┣ 📂tests
+ ┃ ┣ 📂Feature
+ ┃ ┃ ┗ 📜ExampleTest.php
+ ┃ ┣ 📂Unit
+ ┃ ┃ ┗ 📜ExampleTest.php
+ ┃ ┗ 📜TestCase.php
+ ┣ 📜.editorconfig
+ ┣ 📜.env
+ ┣ 📜.env.example
+ ┣ 📜.gitattributes
+ ┣ 📜.gitignore
+ ┣ 📜.npmrc
+ ┣ 📜artisan
+ ┣ 📜composer.json
+ ┣ 📜composer.lock
+ ┣ 📜docker-compose.yml
+ ┣ 📜Dockerfile
+ ┣ 📜package.json
+ ┣ 📜phpunit.xml
+ ┣ 📜README.md
+ ┣ 📜test_api.cjs
+ ┣ 📜test_results.txt
+ ┗ 📜vite.config.js
 ```
 
----
+### 5.1 Folder `app/`
 
-# 3. Teknologi yang Digunakan
+Folder `app/` berisi kode utama aplikasi. Di dalamnya terdapat controller, model, middleware, dan provider yang digunakan untuk menjalankan logika sistem.
 
-| Teknologi       | Fungsi                     |
-| --------------- | -------------------------- |
-| PHP 8.4         | Bahasa pemrograman backend |
-| Laravel 13      | Framework backend          |
-| MySQL           | Database management system |
-| Composer        | Dependency manager PHP     |
-| Docker          | Containerization           |
-| XAMPP           | Local server environment   |
-| Laravel Artisan | Command line Laravel       |
+### 5.2 Folder `routes/`
 
----
+Folder `routes/` digunakan untuk mendefinisikan route aplikasi. Untuk API, route utama berada pada file `routes/api.php`.
 
-# 4. Setup Environment
+### 5.3 Folder `database/`
 
-## 4.1 Requirement
+Folder `database/` berisi file migration dan seeder. Migration digunakan untuk membuat struktur tabel database, sedangkan seeder digunakan untuk mengisi data awal yang dibutuhkan aplikasi.
 
-### Non-Docker
+### 5.4 Folder `tests/`
 
-- PHP 8.3+
-- Composer
-- MySQL/XAMPP
-
-### Docker
-
-- Docker Desktop
-- MySQL/XAMPP
+Folder `tests/` digunakan untuk menyimpan file pengujian aplikasi. Pengujian dapat dilakukan menggunakan PHPUnit atau tools tambahan sesuai kebutuhan project.
 
 ---
 
-# 5. Konfigurasi Environment
+## 6. Getting Started
 
-## File `.env`
+Bagian ini menjelaskan langkah-langkah untuk menjalankan project pada local machine, baik menggunakan setup non-Docker maupun Docker.
+
+### 6.1 Prerequisites
+
+Sebelum menjalankan project, pastikan beberapa software berikut sudah tersedia:
+
+#### Non-Docker Environment
+
+```bash
+PHP 8.3 atau lebih baru
+Composer
+MySQL atau XAMPP
+Git
+```
+
+#### Docker Environment
+
+```bash
+Docker Desktop
+Docker Compose
+MySQL atau koneksi database lokal
+Git
+```
+
+### 6.2 Clone Repository
+
+Langkah pertama adalah mengambil source code dari repository GitHub:
+
+```bash
+git clone https://github.com/AditNovadianto/be-e-pengadaan-langsung-laravel.git
+cd be-e-pengadaan-langsung-laravel
+```
+
+### 6.3 Install Dependencies
+
+Jika menjalankan tanpa Docker, install dependency PHP menggunakan Composer:
+
+```bash
+composer install
+```
+
+Jika terdapat dependency frontend atau package JavaScript yang dibutuhkan, install juga menggunakan npm:
+
+```bash
+npm install
+```
+
+### 6.4 Environment Configuration
+
+Buat file `.env` berdasarkan `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+Kemudian sesuaikan konfigurasi database:
 
 ```env
 APP_NAME=Laravel
@@ -125,7 +331,7 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-## Docker `.env`
+Untuk environment Docker, konfigurasi database dapat menggunakan host berikut:
 
 ```env
 DB_CONNECTION=mysql
@@ -136,132 +342,258 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
----
+### 6.5 Generate Application Key
 
-# 6. Database Design
+Laravel membutuhkan application key agar konfigurasi keamanan aplikasi dapat berjalan dengan benar.
 
-## 6.1 Tabel `users`
+```bash
+php artisan key:generate
+```
 
-| Field         | Tipe    | Keterangan    |
-| ------------- | ------- | ------------- |
-| id_user       | bigint  | Primary Key   |
-| nama_user     | varchar | Nama user     |
-| email_user    | varchar | Email user    |
-| password_user | varchar | Password user |
-| status_user   | varchar | Status akun   |
-| id_sistem     | bigint  | Relasi sistem |
-| id_role       | bigint  | Relasi role   |
+Jika menggunakan Docker:
 
----
+```bash
+docker exec -it be-e-pengadaan-langsung-laravel-app-1 php artisan key:generate
+```
 
-## 6.2 Tabel `roles`
+### 6.6 Run Migration and Seeder
 
-| Field     | Tipe    | Keterangan  |
-| --------- | ------- | ----------- |
-| id_role   | bigint  | Primary Key |
-| nama_role | varchar | Nama role   |
+Jalankan migration dan seeder untuk membuat struktur database dan data awal:
 
----
+```bash
+php artisan migrate:fresh --seed
+```
 
-## 6.3 Tabel `sistems`
+Jika menggunakan Docker:
 
-| Field       | Tipe    | Keterangan  |
-| ----------- | ------- | ----------- |
-| id_sistem   | bigint  | Primary Key |
-| nama_sistem | varchar | Nama sistem |
+```bash
+docker exec -it be-e-pengadaan-langsung-laravel-app-1 php artisan migrate:fresh --seed
+```
 
----
+### 6.7 Run Development Server
 
-## 6.4 Tabel `penyedias`
+Untuk menjalankan aplikasi secara lokal:
 
-| Field            | Tipe    | Keterangan    |
-| ---------------- | ------- | ------------- |
-| id_penyedia      | bigint  | Primary Key   |
-| nama_penyedia    | varchar | Nama vendor   |
-| alamat_penyedia  | text    | Alamat vendor |
-| email_penyedia   | varchar | Email vendor  |
-| telepon_penyedia | varchar | Nomor telepon |
+```bash
+php artisan serve
+```
 
----
+Aplikasi akan berjalan pada:
 
-## 6.5 Tabel `pengadaans`
+```text
+http://127.0.0.1:8000
+```
 
-| Field               | Tipe    | Keterangan       |
-| ------------------- | ------- | ---------------- |
-| id_pengadaan        | bigint  | Primary Key      |
-| nama_pengadaan      | varchar | Nama pengadaan   |
-| deskripsi_pengadaan | text    | Deskripsi        |
-| nilai_hps           | decimal | Nilai HPS        |
-| nilai_penawaran     | decimal | Nilai penawaran  |
-| nilai_kontrak       | decimal | Nilai kontrak    |
-| status_pengadaan    | varchar | Status pengadaan |
-| id_penyedia         | bigint  | Relasi penyedia  |
+Untuk menjalankan menggunakan Docker:
 
----
+```bash
+docker compose up -d --build
+```
 
-## 6.6 Tabel `progress`
+Untuk menghentikan Docker:
 
-| Field               | Tipe    | Keterangan         |
-| ------------------- | ------- | ------------------ |
-| id_progress         | bigint  | Primary Key        |
-| id_pengadaan        | bigint  | Relasi pengadaan   |
-| progress_persen     | varchar | Progress           |
-| keterangan_progress | text    | Deskripsi progress |
+```bash
+docker compose down
+```
+
+Untuk melihat log aplikasi pada Docker:
+
+```bash
+docker logs -f be-e-pengadaan-langsung-laravel-app-1
+```
 
 ---
 
-## 6.7 Tabel `laporans`
+## 7. Database Design
 
-| Field        | Tipe   | Keterangan       |
-| ------------ | ------ | ---------------- |
-| id_laporan   | bigint | Primary Key      |
-| id_pengadaan | bigint | Relasi pengadaan |
-| isi_laporan  | text   | Isi laporan      |
+Database pada sistem e-Pengadaan Langsung disusun berdasarkan DDL yang telah dibuat. Struktur database terdiri dari beberapa tabel utama yang saling berelasi, yaitu `sistem`, `roles`, `users`, `penyedia`, `pengadaan`, `progress`, dan `laporan`. Setiap tabel memiliki primary key masing-masing dan beberapa tabel menggunakan foreign key untuk menjaga integritas data antar-entitas.
+
+Secara umum, relasi database menggambarkan bahwa sistem memiliki user dan penyedia, user memiliki role tertentu, pengadaan dibuat oleh user dan berkaitan dengan penyedia, sedangkan progress dan laporan terhubung ke data pengadaan.
+
+### 7.1 Tabel `sistem`
+
+Tabel `sistem` digunakan untuk menyimpan informasi sistem yang digunakan oleh user maupun penyedia. Tabel ini menjadi acuan relasi bagi tabel `users` dan `penyedia`.
+
+| Field         | Type         | Constraint                                    | Description                                    |
+| ------------- | ------------ | --------------------------------------------- | ---------------------------------------------- |
+| id_sistem     | int          | Primary Key, Auto Increment, Unique, Not Null | ID unik untuk data sistem                      |
+| nama_sistem   | varchar(255) | Not Null                                      | Nama sistem                                    |
+| status_sistem | varchar(255) | Not Null                                      | Status sistem, misalnya aktif atau tidak aktif |
+
+### 7.2 Tabel `roles`
+
+Tabel `roles` digunakan untuk menyimpan data hak akses atau peran user dalam sistem. Role ini akan digunakan oleh tabel `users` untuk menentukan jenis akses yang dimiliki oleh user.
+
+| Field     | Type         | Constraint                                    | Description                                                                     |
+| --------- | ------------ | --------------------------------------------- | ------------------------------------------------------------------------------- |
+| id_role   | int          | Primary Key, Auto Increment, Unique, Not Null | ID unik untuk role                                                              |
+| nama_role | varchar(255) | Not Null                                      | Nama role user, misalnya admin, panitia, atau role lain sesuai kebutuhan sistem |
+
+### 7.3 Tabel `users`
+
+Tabel `users` digunakan untuk menyimpan data pengguna internal sistem. User memiliki relasi ke tabel `sistem` dan `roles`, sehingga setiap user dapat dikaitkan dengan sistem tertentu dan role tertentu.
+
+| Field         | Type         | Constraint                                    | Description                                               |
+| ------------- | ------------ | --------------------------------------------- | --------------------------------------------------------- |
+| id_user       | int          | Primary Key, Auto Increment, Unique, Not Null | ID unik untuk user                                        |
+| nama_user     | varchar(255) | Not Null                                      | Nama user                                                 |
+| email_user    | varchar(255) | Not Null                                      | Email user yang digunakan untuk login                     |
+| password_user | varchar(255) | Not Null                                      | Password user yang disimpan dalam bentuk terenkripsi/hash |
+| status_user   | varchar(255) | Not Null                                      | Status user, misalnya aktif atau tidak aktif              |
+| id_sistem     | int          | Foreign Key, Not Null                         | Relasi ke tabel `sistem`                                  |
+| id_role       | int          | Foreign Key, Not Null                         | Relasi ke tabel `roles`                                   |
+
+Relasi foreign key:
+
+```sql
+FOREIGN KEY (id_sistem) REFERENCES sistem(id_sistem)
+FOREIGN KEY (id_role) REFERENCES roles(id_role)
+```
+
+### 7.4 Tabel `penyedia`
+
+Tabel `penyedia` digunakan untuk menyimpan data perusahaan atau vendor yang terlibat dalam proses pengadaan. Penyedia memiliki relasi ke tabel `sistem`.
+
+| Field             | Type         | Constraint                                    | Description                                                           |
+| ----------------- | ------------ | --------------------------------------------- | --------------------------------------------------------------------- |
+| id_penyedia       | int          | Primary Key, Auto Increment, Unique, Not Null | ID unik untuk penyedia                                                |
+| nama_perusahaan   | varchar(255) | Not Null                                      | Nama perusahaan penyedia                                              |
+| email_penyedia    | varchar(255) | Not Null                                      | Email penyedia yang dapat digunakan untuk autentikasi atau komunikasi |
+| password_penyedia | varchar(255) | Not Null                                      | Password penyedia yang disimpan dalam bentuk terenkripsi/hash         |
+| nib               | varchar(255) | Not Null                                      | Nomor Induk Berusaha milik penyedia                                   |
+| id_sistem         | int          | Foreign Key, Not Null                         | Relasi ke tabel `sistem`                                              |
+
+Relasi foreign key:
+
+```sql
+FOREIGN KEY (id_sistem) REFERENCES sistem(id_sistem)
+```
+
+### 7.5 Tabel `pengadaan`
+
+Tabel `pengadaan` merupakan tabel utama yang menyimpan data proses pengadaan langsung. Setiap data pengadaan berelasi dengan user sebagai pihak yang membuat atau mengelola pengadaan, serta penyedia sebagai pihak yang terlibat dalam proses pengadaan.
+
+| Field            | Type         | Constraint                                    | Description                                    |
+| ---------------- | ------------ | --------------------------------------------- | ---------------------------------------------- |
+| id_pengadaan     | int          | Primary Key, Auto Increment, Unique, Not Null | ID unik untuk data pengadaan                   |
+| nama_pengadaan   | varchar(255) | Not Null                                      | Nama atau judul pengadaan                      |
+| pagu_anggaran    | varchar(255) | Not Null                                      | Nilai pagu anggaran pengadaan                  |
+| nilai_penawaran  | varchar(255) | Nullable                                      | Nilai penawaran dari penyedia                  |
+| nilai_kontrak    | varchar(255) | Nullable                                      | Nilai kontrak setelah proses pengadaan selesai |
+| status_pengadaan | varchar(255) | Not Null                                      | Status proses pengadaan                        |
+| id_user          | int          | Foreign Key, Not Null                         | Relasi ke tabel `users`                        |
+| id_penyedia      | int          | Foreign Key, Not Null                         | Relasi ke tabel `penyedia`                     |
+
+Relasi foreign key:
+
+```sql
+FOREIGN KEY (id_user) REFERENCES users(id_user)
+FOREIGN KEY (id_penyedia) REFERENCES penyedia(id_penyedia)
+```
+
+### 7.6 Tabel `progress`
+
+Tabel `progress` digunakan untuk menyimpan perkembangan atau persentase progress dari suatu pengadaan. Setiap progress terhubung ke satu data pengadaan.
+
+| Field               | Type         | Constraint                                    | Description                   |
+| ------------------- | ------------ | --------------------------------------------- | ----------------------------- |
+| id_progress         | int          | Primary Key, Auto Increment, Unique, Not Null | ID unik untuk progress        |
+| persentase_progress | varchar(255) | Not Null                                      | Persentase progress pengadaan |
+| keterangan_progress | varchar(255) | Not Null                                      | Keterangan progress pengadaan |
+| id_pengadaan        | int          | Foreign Key, Not Null                         | Relasi ke tabel `pengadaan`   |
+
+Relasi foreign key:
+
+```sql
+FOREIGN KEY (id_pengadaan) REFERENCES pengadaan(id_pengadaan)
+```
+
+### 7.7 Tabel `laporan`
+
+Tabel `laporan` digunakan untuk menyimpan dokumen atau file laporan yang berkaitan dengan pengadaan. Setiap laporan terhubung ke satu data pengadaan.
+
+| Field             | Type         | Constraint                                    | Description                   |
+| ----------------- | ------------ | --------------------------------------------- | ----------------------------- |
+| id_laporan        | int          | Primary Key, Auto Increment, Unique, Not Null | ID unik untuk laporan         |
+| nama_laporan      | varchar(255) | Not Null                                      | Nama laporan                  |
+| file_path_laporan | varchar(255) | Not Null                                      | Lokasi atau path file laporan |
+| id_pengadaan      | int          | Foreign Key, Not Null                         | Relasi ke tabel `pengadaan`   |
+
+Relasi foreign key:
+
+```sql
+FOREIGN KEY (id_pengadaan) REFERENCES pengadaan(id_pengadaan)
+```
+
+### 7.8 Ringkasan Relasi Antar Tabel
+
+| Tabel Asal | Field FK     | Tabel Tujuan | Field Tujuan | Keterangan                               |
+| ---------- | ------------ | ------------ | ------------ | ---------------------------------------- |
+| users      | id_sistem    | sistem       | id_sistem    | User terhubung dengan sistem             |
+| users      | id_role      | roles        | id_role      | User memiliki role tertentu              |
+| penyedia   | id_sistem    | sistem       | id_sistem    | Penyedia terhubung dengan sistem         |
+| pengadaan  | id_user      | users        | id_user      | Pengadaan dibuat atau dikelola oleh user |
+| pengadaan  | id_penyedia  | penyedia     | id_penyedia  | Pengadaan berhubungan dengan penyedia    |
+| progress   | id_pengadaan | pengadaan    | id_pengadaan | Progress dimiliki oleh pengadaan         |
+| laporan    | id_pengadaan | pengadaan    | id_pengadaan | Laporan dimiliki oleh pengadaan          |
+
+### 7.9 Entity Relationship Overview
+
+Relasi database dapat dijelaskan sebagai berikut:
+
+1. Satu `sistem` dapat memiliki banyak `users`.
+2. Satu `sistem` dapat memiliki banyak `penyedia`.
+3. Satu `role` dapat dimiliki oleh banyak `users`.
+4. Satu `user` dapat mengelola banyak `pengadaan`.
+5. Satu `penyedia` dapat terlibat dalam banyak `pengadaan`.
+6. Satu `pengadaan` dapat memiliki banyak `progress`.
+7. Satu `pengadaan` dapat memiliki banyak `laporan`.
+
+Dengan struktur ini, database mampu mendukung proses utama aplikasi e-Pengadaan Langsung, mulai dari pengelolaan user dan penyedia, pencatatan data pengadaan, pemantauan progress, hingga penyimpanan laporan pengadaan.
 
 ---
 
-# 7. Authentication System
+## 8. Authentication System
 
-## Login Flow
+Sistem autentikasi digunakan untuk memastikan hanya user yang memiliki kredensial valid yang dapat mengakses fitur tertentu pada aplikasi.
 
-Sistem menggunakan custom authentication.
+### 8.1 Login Flow
 
-### Field Login
+Alur login berjalan sebagai berikut:
+
+1. User mengirimkan `email_user` dan `password_user` melalui endpoint login.
+2. Backend melakukan validasi terhadap input yang dikirimkan.
+3. Sistem mencari user berdasarkan email.
+4. Password dicek menggunakan mekanisme hashing `bcrypt()`.
+5. Jika kredensial valid, sistem mengembalikan response login berhasil.
+6. User dapat mengakses endpoint yang sesuai dengan hak aksesnya.
+
+### 8.2 Field Login
 
 ```text
 email_user
 password_user
 ```
 
-### Authentication Process
-
-1. User mengirim email dan password
-2. Backend melakukan validasi user
-3. Password dicek menggunakan bcrypt
-4. Jika valid maka token/session diberikan
-5. User dapat mengakses endpoint protected
-
 ---
 
-# 8. API Endpoint Documentation
+## 9. API Endpoint Documentation
 
-## Base URL
+### 9.1 Base URL
 
 ```text
 http://127.0.0.1:8000/api
 ```
 
----
+### 9.2 Authentication
 
-## 8.1 Authentication
-
-### Login User
+#### Login User
 
 ```http
 POST /auth/user/login
 ```
 
-### Request Body
+Request body:
 
 ```json
 {
@@ -270,7 +602,7 @@ POST /auth/user/login
 }
 ```
 
-### Response Success
+Response success:
 
 ```json
 {
@@ -279,59 +611,65 @@ POST /auth/user/login
 }
 ```
 
----
+### 9.3 Pengadaan
 
-## 8.2 Pengadaan
-
-### Get All Pengadaan
+#### Get All Pengadaan
 
 ```http
 GET /pengadaan
 ```
 
-### Create Pengadaan
+Endpoint ini digunakan untuk menampilkan seluruh data pengadaan yang tersedia pada sistem.
+
+#### Create Pengadaan
 
 ```http
 POST /pengadaan
 ```
 
-### Update Pengadaan
+Endpoint ini digunakan untuk menambahkan data pengadaan baru ke dalam database.
+
+#### Update Pengadaan
 
 ```http
 PUT /pengadaan/{id}
 ```
 
-### Delete Pengadaan
+Endpoint ini digunakan untuk memperbarui data pengadaan berdasarkan ID tertentu.
+
+#### Delete Pengadaan
 
 ```http
 DELETE /pengadaan/{id}
 ```
 
----
+Endpoint ini digunakan untuk menghapus data pengadaan berdasarkan ID tertentu.
 
-## 8.3 Progress
+### 9.4 Progress
 
-### Get Progress
+#### Get Progress
 
 ```http
 GET /progress
 ```
 
-### Update Progress
+Endpoint ini digunakan untuk menampilkan data progress pengadaan.
+
+#### Update Progress
 
 ```http
 POST /progress
 ```
 
+Endpoint ini digunakan untuk memperbarui atau menambahkan data progress pengadaan.
+
 ---
 
-# 9. Seeder Documentation
+## 10. Seeder Documentation
 
-## DatabaseSeeder.php
+Seeder digunakan untuk menyediakan data awal yang diperlukan agar aplikasi dapat langsung diuji setelah database dibuat. Contoh data awal yang dapat dibuat melalui seeder adalah user panitia dan vendor.
 
-Seeder digunakan untuk membuat data default.
-
-Contoh:
+Contoh data user:
 
 ```php
 User::create([
@@ -346,17 +684,17 @@ User::create([
 
 ---
 
-# 10. Migration Documentation
+## 11. Migration Documentation
 
-## Menjalankan Migration
+Migration digunakan untuk membuat struktur tabel database secara otomatis berdasarkan file migration yang tersedia pada folder `database/migrations`.
 
-### Non-Docker
+### 11.1 Menjalankan Migration Non-Docker
 
 ```bash
 php artisan migrate:fresh --seed
 ```
 
-### Docker
+### 11.2 Menjalankan Migration Docker
 
 ```bash
 docker exec -it be-e-pengadaan-langsung-laravel-app-1 php artisan migrate:fresh --seed
@@ -364,9 +702,11 @@ docker exec -it be-e-pengadaan-langsung-laravel-app-1 php artisan migrate:fresh 
 
 ---
 
-# 11. Docker Configuration
+## 12. Docker Configuration
 
-## Dockerfile
+Project mendukung penggunaan Docker untuk memudahkan proses setup dan menjalankan aplikasi. Dockerfile digunakan untuk membangun image aplikasi Laravel, sedangkan `docker-compose.yml` digunakan untuk menjalankan service aplikasi.
+
+### 12.1 Dockerfile
 
 ```dockerfile
 FROM php:8.4-cli
@@ -389,9 +729,7 @@ EXPOSE 8000
 CMD php artisan serve --host=0.0.0.0 --port=8000
 ```
 
----
-
-## docker-compose.yml
+### 12.2 docker-compose.yml
 
 ```yaml
 services:
@@ -403,184 +741,187 @@ services:
 
 ---
 
-# 12. Command Documentation
+## 13. Tests
 
-## Composer Install
+Pengujian dilakukan untuk memastikan bahwa fitur utama backend dapat berjalan sesuai dengan kebutuhan sistem. Testing dapat dilakukan secara manual menggunakan Postman, browser, atau frontend HTML yang terhubung ke API.
 
-```bash
-composer install
+### 13.1 Manual Testing Tools
+
+```text
+Frontend HTML
+Browser
+Postman
 ```
 
----
+### 13.2 Login Testing Account
 
-## Generate APP_KEY
-
-```bash
-php artisan key:generate
-```
-
-Docker:
-
-```bash
-docker exec -it be-e-pengadaan-langsung-laravel-app-1 php artisan key:generate
-```
-
----
-
-## Run Laravel
-
-### Non-Docker
-
-```bash
-php artisan serve
-```
-
-### Docker
-
-```bash
-docker compose up -d --build
-```
-
----
-
-## Stop Docker
-
-```bash
-docker compose down
-```
-
----
-
-## View Logs Docker
-
-```bash
-docker logs -f be-e-pengadaan-langsung-laravel-app-1
-```
-
----
-
-# 13. Error Handling
-
-## Error 401 Unauthorized
-
-### Penyebab
-
-- User tidak ditemukan
-- Password salah
-- Seeder belum dijalankan
-
-### Solusi
-
-```bash
-php artisan migrate:fresh --seed
-```
-
----
-
-## Error vendor/autoload.php
-
-### Penyebab
-
-Dependency belum terinstall.
-
-### Solusi
-
-```bash
-composer install
-```
-
----
-
-## Error APP_KEY Missing
-
-### Solusi
-
-```bash
-php artisan key:generate
-```
-
----
-
-# 14. Security
-
-## Password Encryption
-
-Password menggunakan:
-
-```php
-bcrypt()
-```
-
----
-
-## Environment Security
-
-File `.env` tidak boleh diupload ke repository public.
-
-Tambahkan `.env` pada `.gitignore`.
-
----
-
-# 15. Testing
-
-## Manual Testing
-
-Testing dilakukan menggunakan:
-
-- Frontend HTML
-- Browser
-- Postman
-
----
-
-## Login Testing
-
-### Panitia
+#### Panitia
 
 ```text
 Email: panitia@test.com
 Password: password123
 ```
 
-### Vendor
+#### Vendor
 
 ```text
-Email: vendor@test.com
+Email: makmur@test.com
 Password: password123
+```
+
+### 13.3 Automated Test
+
+Jika automated test tersedia, test dapat dijalankan menggunakan PHPUnit:
+
+```bash
+php artisan test
+```
+
+Atau menggunakan konfigurasi PHPUnit:
+
+```bash
+vendor/bin/phpunit
 ```
 
 ---
 
-# 16. Deployment Recommendation
+## 14. Error Handling
 
-## Development
+Bagian ini menjelaskan beberapa error umum yang mungkin muncul saat menjalankan aplikasi beserta cara penyelesaiannya.
+
+### 14.1 Error 401 Unauthorized
+
+Penyebab:
+
+- User tidak ditemukan.
+- Password salah.
+- Seeder belum dijalankan.
+
+Solusi:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+### 14.2 Error `vendor/autoload.php`
+
+Penyebab:
+
+- Dependency Laravel belum terinstall.
+
+Solusi:
+
+```bash
+composer install
+```
+
+### 14.3 Error APP_KEY Missing
+
+Penyebab:
+
+- Application key Laravel belum dibuat.
+
+Solusi:
+
+```bash
+php artisan key:generate
+```
+
+---
+
+## 15. Security
+
+Keamanan aplikasi diperhatikan melalui penggunaan hashing password dan pengamanan file environment.
+
+### 15.1 Password Encryption
+
+Password user disimpan menggunakan fungsi hashing:
+
+```php
+bcrypt()
+```
+
+Dengan penggunaan hashing, password tidak disimpan dalam bentuk plain text pada database.
+
+### 15.2 Environment Security
+
+File `.env` tidak boleh diupload ke repository public karena berisi konfigurasi sensitif, seperti nama database, username, password, dan konfigurasi aplikasi lainnya.
+
+File `.env` harus dimasukkan ke dalam `.gitignore` agar tidak ikut ter-push ke repository.
+
+---
+
+## 16. Deployment
+
+### 16.1 Development Deployment
+
+Untuk kebutuhan development, project dapat dijalankan menggunakan:
 
 - XAMPP
+- MySQL lokal
 - Docker Desktop
+- Laravel development server
 
-## Production
+### 16.2 Production Deployment Recommendation
 
-Disarankan menggunakan:
+Untuk environment production, disarankan menggunakan konfigurasi server berikut:
 
 - Ubuntu Server
 - Nginx
 - PHP-FPM
 - MySQL Server
 - SSL HTTPS
+- Environment variable yang aman
+- File permission yang sesuai untuk folder Laravel
+
+### 16.3 Deployment Notes
+
+Pada environment production, nilai `APP_ENV` sebaiknya diubah menjadi `production`, `APP_DEBUG` diubah menjadi `false`, dan konfigurasi database harus disesuaikan dengan server production.
+
+```env
+APP_ENV=production
+APP_DEBUG=false
+```
 
 ---
 
-# 17. Kesimpulan
+## 17. Contributing
 
-Backend Laravel e-Pengadaan Langsung dibangun menggunakan arsitektur REST API berbasis Laravel dengan dukungan Docker dan MySQL.
+Kontribusi pada project dilakukan melalui version control GitHub. Setiap perubahan sebaiknya dilakukan melalui branch terpisah, kemudian dilakukan review sebelum digabungkan ke branch utama.
 
-Sistem mendukung:
+Alur kontribusi yang disarankan:
 
-- Authentication
-- CRUD Pengadaan
-- Tracking Progress
-- Vendor Management
-- Seeder otomatis
-- Dockerized deployment
+1. Clone repository.
+2. Buat branch baru sesuai fitur atau perbaikan.
+3. Lakukan perubahan kode.
+4. Jalankan testing.
+5. Commit perubahan dengan pesan yang jelas.
+6. Push branch ke repository.
+7. Ajukan pull request atau merge request.
 
-Dokumentasi ini digunakan sebagai referensi pengembangan, maintenance, dan deployment sistem backend e-Pengadaan Langsung.
+---
+
+## 18. Release History
+
+| Version | Description                                            |
+| ------- | ------------------------------------------------------ |
+| 0.1     | Initial backend setup                                  |
+| 0.2     | Penambahan konfigurasi database, migration, dan seeder |
+| 0.3     | Penambahan endpoint autentikasi dan pengadaan          |
+| 0.4     | Penambahan konfigurasi Docker dan dokumentasi testing  |
+
+---
+
+## 19. Authors
+
+| Name            | Role      |
+| --------------- | --------- |
+| Adit Novadianto | Developer |
+
+---
+
+## 20. Conclusion
+
+Backend Laravel e-Pengadaan Langsung merupakan sistem backend berbasis REST API yang digunakan untuk mendukung proses pengadaan langsung secara digital. Sistem ini dibangun menggunakan Laravel, PHP, MySQL, serta mendukung Docker untuk mempermudah proses setup dan deployment.
+
+Dokumentasi ini dapat digunakan sebagai referensi teknis bagi developer, tester, maupun pihak lain yang ingin memahami struktur project, konfigurasi environment, desain database, endpoint API, testing, dan deployment aplikasi.
